@@ -3,7 +3,7 @@ import assert from "node:assert";
 import test from "node:test";
 import { ProductContext, ProductInputModel, ProductModel, productSchema } from "./product.js";
 
-test("user", async () => {
+test("product", async () => {
   const createProductSource = `
     mutation ($model: ProductInputModel!) {
       createProduct(model: $model)
