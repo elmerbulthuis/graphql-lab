@@ -68,6 +68,9 @@ interface AnimalRow {
 export class ZooModel {
   @Field()
   name!: string;
+
+  @Field(() => [AnimalModel])
+  animals!: AnimalModel[];
 }
 
 @ObjectType()
@@ -135,8 +138,31 @@ class ZooResolver {
       return null;
     }
 
+    const animalRows = context.getAnimalRowsByZoo(key);
+    const animalModels = animalRows.map((row) => {
+      switch (row.type) {
+        case "lion": {
+          const model = {
+            name: row.name,
+            walkSpeed: row.walkSpeed ?? 0,
+            runSpeed: row.runSpeed ?? 0,
+          } satisfies LionModel;
+          return model;
+        }
+
+        case "shark": {
+          const model = {
+            name: row.name,
+            swimSpeed: row.swimSpeed ?? 0,
+          } satisfies SharkModel;
+          return model;
+        }
+      }
+    });
+
     const model = {
       name: row.name,
+      animals: animalModels,
     } satisfies ZooModel;
     return model;
   }
