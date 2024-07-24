@@ -9,6 +9,7 @@ test("zoo", async () => {
       getZoo(key: $key) {
         name
         animals {
+          __typename
           name
         }
       }
@@ -109,6 +110,7 @@ test("zoo", async () => {
           name: "Blijdorp",
           animals: [
             {
+              __typename: "LionModel",
               name: "Simba",
             },
           ],
@@ -132,6 +134,7 @@ test("zoo", async () => {
           name: "Artis",
           animals: [
             {
+              __typename: "SharkModel",
               name: "Jaws",
             },
           ],
