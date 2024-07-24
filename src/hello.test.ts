@@ -3,7 +3,7 @@ import assert from "node:assert";
 import test from "node:test";
 import { schemaHello } from "./hello.js";
 
-test("schema", async () => {
+test("hello", async () => {
   const source = "{ hello(exclamationMark: true) }";
   const result = await graphql({
     schema: schemaHello,
