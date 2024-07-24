@@ -19,7 +19,9 @@
   "dependencies": {
     "@types/node": "^20.14.12",
     "@types/yargs": "^17.0.32",
-    "graphql": "^16.9.0"
+    "graphql": "^16.9.0",
+    "reflect-metadata": "^0.2.2",
+    "type-graphql": "^2.0.0-rc.2"
   },
   "engines": {
     "node": ">=20"
