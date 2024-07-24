@@ -113,6 +113,7 @@ test("zoo", async () => {
     assert.deepEqual(result, {
       data: {
         getZoo: {
+          key: 1,
           name: "Blijdorp",
           animals: [
             {
@@ -136,6 +137,7 @@ test("zoo", async () => {
     assert.deepEqual(result, {
       data: {
         getZoo: {
+          key: 2,
           name: "Artis",
           animals: [
             {

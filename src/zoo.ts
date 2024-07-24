@@ -5,11 +5,13 @@ import {
   buildSchema,
   Ctx,
   Field,
+  FieldResolver,
   InputType,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
 } from "type-graphql";
 
 //#region context
@@ -66,6 +68,9 @@ interface AnimalRow {
 
 @ObjectType()
 export class ZooModel {
+  @Field(() => GraphQLInt)
+  key!: number;
+
   @Field()
   name!: string;
 
@@ -129,7 +134,7 @@ export class NewSharkModel extends NewAnimalModel {
 
 //#region resolvers
 
-@Resolver()
+@Resolver(() => ZooModel)
 class ZooResolver {
   @Query(() => ZooModel)
   getZoo(@Ctx() context: ZooContext, @Arg("key", () => GraphQLInt) key: number): ZooModel | null {
@@ -138,7 +143,28 @@ class ZooResolver {
       return null;
     }
 
-    const animalRows = context.getAnimalRowsByZoo(key);
+    const model = {
+      key: row.key,
+      name: row.name,
+      animals: [],
+    } satisfies ZooModel;
+    return model;
+  }
+
+  @Mutation(() => GraphQLInt)
+  async insertZoo(@Ctx() context: ZooContext, @Arg("model") model: NewZooModel): Promise<number> {
+    const key = context.nextKey();
+    const row = {
+      key,
+      name: model.name,
+    } satisfies ZooRow;
+    context.insertZooRow(row);
+    return key;
+  }
+
+  @FieldResolver()
+  async animals(@Ctx() context: ZooContext, @Root() parent: ZooModel): Promise<AnimalModel[]> {
+    const animalRows = context.getAnimalRowsByZoo(parent.key);
     const animalModels = animalRows.map((row) => {
       switch (row.type) {
         case "lion": {
@@ -159,23 +185,7 @@ class ZooResolver {
         }
       }
     });
-
-    const model = {
-      name: row.name,
-      animals: animalModels,
-    } satisfies ZooModel;
-    return model;
-  }
-
-  @Mutation(() => GraphQLInt)
-  async insertZoo(@Ctx() context: ZooContext, @Arg("model") model: NewZooModel): Promise<number> {
-    const key = context.nextKey();
-    const row = {
-      key,
-      name: model.name,
-    } satisfies ZooRow;
-    context.insertZooRow(row);
-    return key;
+    return animalModels;
   }
 }
 
