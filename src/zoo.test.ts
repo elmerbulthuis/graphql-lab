@@ -39,9 +39,9 @@ test("zoo", async () => {
       schema: zooSchema,
       source: insertZooSource,
       variableValues: {
-        model: {
+        model: new NewZooModel({
           name: "Blijdorp",
-        } satisfies NewZooModel,
+        }),
       },
     });
     assert.deepEqual(result, { data: { insertZoo: 1 } });
@@ -53,9 +53,9 @@ test("zoo", async () => {
       schema: zooSchema,
       source: insertZooSource,
       variableValues: {
-        model: {
+        model: new NewZooModel({
           name: "Artis",
-        } satisfies NewZooModel,
+        }),
       },
     });
     assert.deepEqual(result, { data: { insertZoo: 2 } });
@@ -68,11 +68,11 @@ test("zoo", async () => {
       source: insertLionSource,
       variableValues: {
         zooKey: 1,
-        model: {
+        model: new NewLionModel({
           name: "Simba",
           walkSpeed: 1.0,
           runSpeed: 2.0,
-        } satisfies NewLionModel,
+        }),
       },
     });
     assert.deepEqual(result, { data: { insertLion: 3 } });
