@@ -30,7 +30,7 @@ test("user", async () => {
         input: {
           name: "Elmer",
           email: "elmer@luvdasun.com",
-        } as UserModel,
+        } satisfies UserModel,
       },
     });
     assert.deepEqual(result, { data: { createUser: 1 } });
@@ -44,7 +44,8 @@ test("user", async () => {
       variableValues: {
         input: {
           name: "Gijs",
-        } as UserModel,
+          email: null,
+        } satisfies UserModel,
       },
     });
     assert.deepEqual(result, { data: { createUser: 2 } });
