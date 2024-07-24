@@ -1,0 +1,13 @@
+.*
+
+*.tsbuildinfo
+
+!.gitignore
+!.editorconfig
+
+node_modules/
+transpiled/
+typed/
+
+!.vscode/
+!.github/

@@ -1,0 +1,14 @@
+{
+  "extends": "@tsconfig/node20",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./transpiled",
+    "declarationDir": "./typed",
+    "sourceMap": true,
+    "declaration": true,
+    "composite": true,
+    "noUncheckedIndexedAccess": true,
+    "experimentalDecorators": true,
+  },
+  "include": ["src/**/*"]
+}
