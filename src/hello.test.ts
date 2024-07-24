@@ -5,6 +5,6 @@ import { schemaHello } from "./hello.js";
 
 test("schema", async () => {
   const source = "{ hello }";
-  const result = await graphql({ schema: schemaHello, source });
-  assert.deepEqual(result, { data: { hello: "hello" } });
+  const result = await graphql({ schema: schemaHello, source, contextValue: { hello: "hello1" } });
+  assert.deepEqual(result, { data: { hello: "hello1" } });
 });

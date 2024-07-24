@@ -6,8 +6,8 @@ export const schemaHello = new GraphQLSchema({
     fields: {
       hello: {
         type: GraphQLString,
-        resolve: (a, b, c, d) => {
-          return "hello";
+        resolve: (parent, args, context, info) => {
+          return context.hello;
         },
       },
     },
