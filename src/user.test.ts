@@ -5,10 +5,10 @@ import { schemaUser, UserContext, UserModel } from "./user.js";
 
 test("user", async () => {
   const createUserSource = `
-      mutation ($input: UserInput!) {
-        createUser(user: $input)
-      }
-    `;
+    mutation ($input: UserInput!) {
+      createUser(user: $input)
+    }
+  `;
   const getUserSource = `
     query ($key: Int!) {
       user(key: $key) {
