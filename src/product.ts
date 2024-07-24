@@ -12,24 +12,6 @@ import {
   Resolver,
 } from "type-graphql";
 
-// const productSchema = buildSchema(
-//   `
-//     type Product {
-//       name: String!
-//       description: String
-//       price: Float!
-//     }
-
-//     type Mutation {
-//       createProduct(input: Product!): Int
-//     }
-
-//     type Query {
-//       getProduct(input: Int!): Product
-//     }
-//   `,
-// );
-
 export class ProductContext {
   private lastKey = 0;
   private readonly store = new Map<number, ProductModel>();
