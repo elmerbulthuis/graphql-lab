@@ -4,7 +4,12 @@ import test from "node:test";
 import { schemaHello } from "./hello.js";
 
 test("schema", async () => {
-  const source = "{ hello }";
-  const result = await graphql({ schema: schemaHello, source, contextValue: { hello: "hello1" } });
-  assert.deepEqual(result, { data: { hello: "hello1" } });
+  const source = "{ hello(exclamationMark: true) }";
+  const result = await graphql({
+    schema: schemaHello,
+    source,
+    contextValue: { hello: "hello" },
+    rootValue: { name: "world" },
+  });
+  assert.deepEqual(result, { data: { hello: "hello world!" } });
 });

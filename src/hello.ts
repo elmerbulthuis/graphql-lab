@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
+import { GraphQLBoolean, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
 
 export const schemaHello = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -7,7 +7,10 @@ export const schemaHello = new GraphQLSchema({
       hello: {
         type: GraphQLString,
         resolve: (parent, args, context, info) => {
-          return context.hello;
+          return `${context.hello} ${parent.name}${args.exclamationMark ? "!" : ""}`;
+        },
+        args: {
+          exclamationMark: { defaultValue: false, type: GraphQLBoolean },
         },
       },
     },
