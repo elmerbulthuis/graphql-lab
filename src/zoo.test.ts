@@ -1,14 +1,7 @@
 import { graphql } from "graphql";
 import assert from "node:assert";
 import test from "node:test";
-import {
-  NewLionModel,
-  NewSharkModel,
-  NewZooModel,
-  ZooContext,
-  ZooModel,
-  zooSchema,
-} from "./zoo.js";
+import { NewLionModel, NewSharkModel, NewZooModel, ZooContext, zooSchema } from "./zoo.js";
 
 test("zoo", async () => {
   const getZooSource = `
@@ -92,10 +85,10 @@ test("zoo", async () => {
       source: insertSharkSource,
       variableValues: {
         zooKey: 2,
-        model: {
+        model: new NewSharkModel({
           name: "Jaws",
           swimSpeed: 0.5,
-        } satisfies NewSharkModel,
+        }),
       },
     });
     assert.deepEqual(result, { data: { insertShark: 4 } });
@@ -113,14 +106,13 @@ test("zoo", async () => {
     assert.deepEqual(result, {
       data: {
         getZoo: {
-          key: 1,
           name: "Blijdorp",
           animals: [
             {
               name: "Simba",
             },
           ],
-        } satisfies ZooModel,
+        },
       },
     });
   }
@@ -137,14 +129,13 @@ test("zoo", async () => {
     assert.deepEqual(result, {
       data: {
         getZoo: {
-          key: 2,
           name: "Artis",
           animals: [
             {
               name: "Jaws",
             },
           ],
-        } satisfies ZooModel,
+        },
       },
     });
   }

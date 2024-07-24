@@ -7,6 +7,7 @@ import {
   Field,
   FieldResolver,
   InputType,
+  InterfaceType,
   Mutation,
   ObjectType,
   Query,
@@ -68,6 +69,10 @@ interface AnimalRow {
 
 @ObjectType()
 export class ZooModel {
+  constructor(interior?: ZooModel) {
+    Object.assign(this, interior);
+  }
+
   @Field(() => GraphQLInt)
   key!: number;
 
@@ -78,14 +83,24 @@ export class ZooModel {
   animals!: AnimalModel[];
 }
 
-@ObjectType()
+@InterfaceType()
 export class AnimalModel {
+  constructor(interior?: AnimalModel) {
+    Object.assign(this, interior);
+  }
+
   @Field()
   name!: string;
 }
 
-@ObjectType()
+@ObjectType({ implements: AnimalModel })
 export class LionModel extends AnimalModel {
+  constructor(interior?: LionModel) {
+    super();
+
+    Object.assign(this, interior);
+  }
+
   @Field(() => GraphQLFloat)
   walkSpeed!: number;
 
@@ -93,8 +108,14 @@ export class LionModel extends AnimalModel {
   runSpeed!: number;
 }
 
-@ObjectType()
+@ObjectType({ implements: AnimalModel })
 export class SharkModel extends AnimalModel {
+  constructor(interior?: SharkModel) {
+    super();
+
+    Object.assign(this, interior);
+  }
+
   @Field(() => GraphQLFloat)
   swimSpeed!: number;
 }
@@ -105,18 +126,32 @@ export class SharkModel extends AnimalModel {
 
 @InputType()
 export class NewZooModel {
+  constructor(interior?: NewZooModel) {
+    Object.assign(this, interior);
+  }
+
   @Field()
   name!: string;
 }
 
 @InputType()
 export class NewAnimalModel {
+  constructor(interior?: NewAnimalModel) {
+    Object.assign(this, interior);
+  }
+
   @Field()
   name!: string;
 }
 
 @InputType()
 export class NewLionModel extends NewAnimalModel {
+  constructor(interior?: NewLionModel) {
+    super();
+
+    Object.assign(this, interior);
+  }
+
   @Field(() => GraphQLFloat)
   walkSpeed!: number;
 
@@ -126,6 +161,12 @@ export class NewLionModel extends NewAnimalModel {
 
 @InputType()
 export class NewSharkModel extends NewAnimalModel {
+  constructor(interior?: NewSharkModel) {
+    super();
+
+    Object.assign(this, interior);
+  }
+
   @Field(() => GraphQLFloat)
   swimSpeed!: number;
 }
@@ -143,11 +184,11 @@ class ZooResolver {
       return null;
     }
 
-    const model = {
+    const model = new ZooModel({
       key: row.key,
       name: row.name,
       animals: [],
-    } satisfies ZooModel;
+    });
     return model;
   }
 
@@ -168,19 +209,19 @@ class ZooResolver {
     const animalModels = animalRows.map((row) => {
       switch (row.type) {
         case "lion": {
-          const model = {
+          const model = new LionModel({
             name: row.name,
             walkSpeed: row.walkSpeed ?? 0,
             runSpeed: row.runSpeed ?? 0,
-          } satisfies LionModel;
+          });
           return model;
         }
 
         case "shark": {
-          const model = {
+          const model = new SharkModel({
             name: row.name,
             swimSpeed: row.swimSpeed ?? 0,
-          } satisfies SharkModel;
+          });
           return model;
         }
       }
@@ -203,19 +244,19 @@ class AnimalResolver {
 
     switch (row.type) {
       case "lion": {
-        const model = {
+        const model = new LionModel({
           name: row.name,
           walkSpeed: row.walkSpeed ?? 0,
           runSpeed: row.runSpeed ?? 0,
-        } satisfies LionModel;
+        });
         return model;
       }
 
       case "shark": {
-        const model = {
+        const model = new SharkModel({
           name: row.name,
           swimSpeed: row.swimSpeed ?? 0,
-        } satisfies SharkModel;
+        });
         return model;
       }
     }
