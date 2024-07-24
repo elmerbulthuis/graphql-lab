@@ -1,4 +1,4 @@
-import { GraphQLFloat, GraphQLInt } from "graphql";
+import { GraphQLFloat, GraphQLInt, printSchema } from "graphql";
 import "reflect-metadata";
 import {
   Arg,
@@ -270,3 +270,5 @@ class SharkResolver {
 export const zooSchema = await buildSchema({
   resolvers: [ZooResolver, AnimalResolver, LionResolver, SharkResolver],
 });
+
+console.log(printSchema(zooSchema));
