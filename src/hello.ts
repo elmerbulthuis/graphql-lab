@@ -8,7 +8,7 @@ import {
 
 export const schemaHello = new GraphQLSchema({
   query: new GraphQLObjectType({
-    name: "root_query",
+    name: "Query",
     fields: {
       hello: {
         type: new GraphQLNonNull(GraphQLString),
