@@ -17,6 +17,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.1",
     "@apollo/server": "^4.10.5",
     "@types/node": "^20.14.12",
     "@types/yargs": "^17.0.32",
