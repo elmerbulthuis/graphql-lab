@@ -22,7 +22,7 @@ test("hi-there", async () => {
       listen: { signal: controller.signal, port: 8080 },
     });
 
-    const response = await fetch(new URL("/graphql", url).toString(), {
+    const response = await fetch(new URL("/graphql", url), {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
