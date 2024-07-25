@@ -18,11 +18,11 @@ test("hi-there", async () => {
     const server = new ApolloServer({
       schema: hiThereSchema,
     });
-    const { url } = await startStandaloneServer(server, {
+    const { url: baseUrl } = await startStandaloneServer(server, {
       listen: { signal: controller.signal, port: 8080 },
     });
 
-    const response = await fetch(new URL("/graphql", url), {
+    const response = await fetch(new URL("/graphql", baseUrl), {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
